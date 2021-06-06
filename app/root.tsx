@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import type { LinksFunction, LoaderFunction } from "remix";
 import { Meta, Links, Scripts, useRouteData, LiveReload } from "remix";
 import { Outlet } from "react-router-dom";
 
+import StylesContext from "./stylesContext";
 import stylesUrl from "./styles/global.css";
 
 export let links: LinksFunction = () => {
@@ -13,6 +15,8 @@ export let loader: LoaderFunction = async () => {
 };
 
 function Document({ children }: { children: React.ReactNode }) {
+  let styles = useContext(StylesContext);
+
   return (
     <html lang="en">
       <head>
@@ -20,6 +24,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.png" type="image/png" />
         <Meta />
         <Links />
+        {styles ? <style>{styles}</style> : null}
       </head>
       <body>
         {children}
